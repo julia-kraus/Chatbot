@@ -1,13 +1,13 @@
 
                                          
-    def create_training_data():
-            # create our training data
-        training = []
-        output = []
-        # create an empty array for our output
-        output_empty = [0] * len(classes)
+def create_training_data():
+    # create our training data
+    training = []
+    output = []
+    # create an empty array for our output
+    output_empty = [0] * len(classes)
 
-        # training set, bag of words for each sentence
+     # training set, bag of words for each sentence
         for doc in self.documents:
             # initialize our bag of words
             bag = []
@@ -36,15 +36,3 @@
         
         return train_x, train_y
                  
-
-def remove_duplicates(ls):
-    return sorted(list(set(ls)))
-
-def stem_words(words):
-    ignore_words = ['?']
-    # stem and lower each word and remove duplicates. set removes duplicates, then turn back to list
-    return [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
-
-def create_model():
-                 
-       
