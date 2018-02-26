@@ -62,14 +62,55 @@ class Intents():
     
     def edit_lexicon(self):
         self.lexicon = remove_duplicates(self.lexicon)
-        self.stem()
+        self.lexicon = stem(self.lexicon)
         return
-        
     
-    def stem(self):
-        ignore_words = ['?']
-        self.lexicon = [stemmer.stem(w.lower()) for w in self.lexicon if w not in ignore_words]
-        return
+    def create_features(self):
+        training_features = []
+        for doc in self.documents:
+            bag = self.build_bag_of_words(doc)
+            training_features.append(bag)
+        return training_features
+            
+        
+    def build_bag_of_words(self, doc):
+        """return a bag of words a sentence"""
+            bag = []
+            words = get_words_from_document(doc)
+            words = stem(words)
+
+            for w in self.lexicon:
+                bag.append(1) if w in words else bag.append(0)
+            return bag
+                
+    def get_labels(self):
+        """stimmt noch nicht ganz"""
+        for doc in self.documents:
+            label = [classes.index(doc[1])] = 1
+                
+    def create_training_data(self):
+    
+        training_features = self.create_features
+        training_labels = self.get_labels()
+    
+        training_data = list(zip(training_features, training_labels))
+
+        random.shuffle(training)
+    
+        return zip(*training_data)
+    
+
+
+            
+            
+def get_words_from_document(doc):
+    words = doc[0]
+    return words
+   
+def stem(words):
+    ignore_words = ['?']
+    words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
+    return words
 
     
 def remove_duplicates(ls):
