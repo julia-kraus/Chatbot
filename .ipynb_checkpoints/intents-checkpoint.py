@@ -99,10 +99,7 @@ class Intents():
     
         return zip(*training_data)
     
-
-
-            
-            
+         
 def get_words_from_document(doc):
     words = doc[0]
     return words
