@@ -21,34 +21,34 @@ class Intents:
     def __init__(self, filename='intents1.json'):
         self.intents = self.load_intents(filename)
         self.organize_intents()
-        print("instance of intents created!")
 
-    def load_intents(self, filename):
+    @staticmethod
+    def load_intents(filename):
         """import our chatbots intent file"""
-        with open('intents1.json') as json_data:
+        with open(filename) as json_data:
             intents = json.load(json_data)['intents']
         return intents
 
     def organize_intents(self):
         """extract words, documents and classes from the intents"""
         for intent in self.intents:
+            self.get_class(intent)
             for pattern in intent['patterns']:
                 self.organize_patterns(pattern, intent)
 
-        self.edit_lexicon()
         self.classes = remove_duplicates(self.classes)
+        self.lexicon = remove_duplicates(self.lexicon)
         return
 
     def organize_patterns(self, pattern, intent):
         """organizes the lexicon, class and documents"""
         self.get_lexicon(pattern)
-        self.get_class(intent)
         self.get_document(pattern, intent)
         return
 
     def get_lexicon(self, pattern):
         """tokenizes a pattern and adds the resulting words to the lexicon"""
-        w = nltk.word_tokenize(pattern)
+        w = tokenize_sentence(pattern)
         self.lexicon.extend(w)
         return
 
@@ -60,16 +60,9 @@ class Intents:
 
     def get_document(self, pattern, intent):
         """get the documents from the intents"""
-        w = nltk.word_tokenize(pattern)
+        w = tokenize_sentence(pattern)
         self.documents.append((w, intent['tag']))
         return
-
-    def edit_lexicon(self):
-        """remove duplicates and stem words"""
-        self.lexicon = stem(self.lexicon)
-        self.lexicon = remove_duplicates(self.lexicon)
-        return
-
 
 def stem(words):
     stemmer = LancasterStemmer()
@@ -82,9 +75,7 @@ def remove_duplicates(ls):
     return sorted(list(set(ls)))
 
 
-def classify():
-    pass
-
-
-def response():
-    pass
+def tokenize_sentence(sentence):
+    words = nltk.word_tokenize(sentence)
+    words = stem(words)
+    return words
