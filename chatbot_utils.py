@@ -40,53 +40,73 @@ class Intents():
         return
     
     def organize_patterns(self, pattern, intent):
-            self.get_lexicon(pattern)
-            self.get_class(intent)
-            self.get_document(pattern, intent)
-            return 
+        """organizes the lexicon, pattern and documents"""
+        self.get_lexicon(pattern)
+        self.get_class(intent)
+        self.get_document(pattern, intent)
+        return 
         
     def get_lexicon(self, pattern):
+        """tokenizes a pattern and adds the resulting words to the lexicon"""
         w = nltk.word_tokenize(pattern)
         self.lexicon.extend(w)
         return
     
     def get_class(self, intent):
+        """get the unique classes of the intents"""
         if intent['tag'] not in self.classes:
              self.classes.append(intent['tag'])
         return
     
     def get_document(self, pattern, intent):
+        """get the documents from the intents"""
         w = nltk.word_tokenize(pattern)
         self.documents.append((w, intent['tag']))
         return
     
     def edit_lexicon(self):
-        self.lexicon = remove_duplicates(self.lexicon)
+        """remove duplicates and stem words"""
         self.lexicon = stem(self.lexicon)
+        self.lexicon = remove_duplicates(self.lexicon)
         return
     
-    def create_features(self):
+/* class Dataset():
+    """Class for creation of training- and test datasets."""
+    x_train = []
+    x_test = []
+    y_train = []
+    y_test = []
+    
+    def __init__(train_intents, test_intents = None):
+        self.x_train = self.create_features(train_intents)
+        self.x_test = self.create_features(test_intents)
+        self.y_train = self.create_features
+    
+    def create_features(intents):
         training_features = []
-        for doc in self.documents:
-            bag = self.build_bag_of_words(doc)
+        for doc in intents.documents:
+            bag = intents.build_bag_of_words(doc)
             training_features.append(bag)
         return training_features
             
         
     def build_bag_of_words(self, doc):
         """return a bag of words a sentence"""
-            bag = []
-            words = get_words_from_document(doc)
-            words = stem(words)
+        bag = []
+        words = get_words_from_document(doc)
+        words = stem(words)
 
-            for w in self.lexicon:
-                bag.append(1) if w in words else bag.append(0)
-            return bag
+        for w in self.lexicon:
+            bag.append(1) if w in words else bag.append(0)
+        return bag
                 
     def get_labels(self):
         """stimmt noch nicht ganz"""
+        labels = []
         for doc in self.documents:
-            label = [classes.index(doc[1])] = 1
+            label = [classes.index(doc[1])] == 1
+            labels.append(label)
+        return labels
                 
     def create_training_data(self):
     
@@ -99,7 +119,8 @@ class Intents():
     
         return zip(*training_data)
     
-         
+*/ 
+
 def get_words_from_document(doc):
     words = doc[0]
     return words
@@ -112,6 +133,12 @@ def stem(words):
     
 def remove_duplicates(ls):
     return sorted(list(set(ls)))
+
+def classify():
+    pass
+
+def response():
+    pass
 
 
     
