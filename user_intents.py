@@ -22,9 +22,8 @@ class Intents:
         self.intents = self.load_intents(filename)
         self.organize_intents()
 
-    @staticmethod
-    def load_intents(filename):
-        """import our chatbots intent file"""
+    @classmethod
+    def load_intents(cls, filename):
         with open(filename) as json_data:
             intents = json.load(json_data)['intents']
         return intents
@@ -63,6 +62,7 @@ class Intents:
         w = tokenize_sentence(pattern)
         self.documents.append((w, intent['tag']))
         return
+
 
 def stem(words):
     stemmer = LancasterStemmer()
