@@ -1,13 +1,15 @@
 import unittest
-import utils
+
+import dataset
+import user_intents
 
 
 class IntentsTester(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.intents = utils.Intents()
-        cls.dataset = utils.Dataset()
+        cls.intents = user_intents.Intents()
+        cls.dataset = dataset.Dataset
         cls.maxDiff = None
 
     def test_create_intent(self):
@@ -22,15 +24,20 @@ class IntentsTester(unittest.TestCase):
     def test_documents(self):
         self.assertEqual(self.intents.documents, documents)
 
-    def test_create_training_data(self):
-        pass
+    def test_bag_of_words(self):
+        bag = dataset.build_bag_of_words(['Is', 'anyone', 'there', '?'], lexicon)
+        self.assertEqual(bag,
+                         [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
+                          0, 0, 0, 1, 0, 0, 0, 0, 0])
+
+    def test_get_features(self):
+        features = self.dataset.get_features(self.intents)
+        self.assertEqual(features.shape, (len(documents), len(lexicon)))
 
 
 lexicon = ["'m", "'s", 'a', 'anyon', 'ar', 'buy', 'bye', 'can', 'cheap', 'cheapest', 'coupon', 'day', 'deal', 'find',
-           'for',
-           'good', 'goodby', 'hello', 'help', 'hi', 'how', 'i', 'is', 'lat', 'less', 'look', 'me', 'med', 'money',
-           'see',
-           'send', 'thank', 'that', 'the', 'ther', 'to', 'want', 'what', 'wher', 'you']
+           'for', 'good', 'goodby', 'hello', 'help', 'hi', 'how', 'i', 'is', 'lat', 'less', 'look', 'me', 'med',
+           'money', 'see', 'send', 'thank', 'that', 'the', 'ther', 'to', 'want', 'what', 'wher', 'you']
 
 classes = ['coupon', 'goodbye', 'greeting', 'med', 'thanks']
 
