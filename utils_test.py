@@ -9,7 +9,7 @@ class IntentsTester(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.intents = user_intents.Intents()
-        cls.data = dataset.Dataset
+        cls.data = dataset.Dataset(cls.intents)
         cls.maxDiff = None
 
     def test_create_intent(self):
@@ -29,11 +29,11 @@ class IntentsTester(unittest.TestCase):
         self.assertEqual(bag, feature1)
 
     def test_get_features(self):
-        features = self.data.get_features(self.intents)
+        features = self.data.get_features()
         self.assertEqual(features.shape, (len(documents), len(lexicon)))
 
     def test_get_labels(self):
-        labels = self.data.get_labels(self.intents)
+        labels = self.data.get_labels()
         self.assertTrue((labels[1] == label1).all())
         self.assertTrue((labels[5] == label5).all())
 
@@ -43,7 +43,7 @@ class IntentsTester(unittest.TestCase):
         self.assertEqual(train_y.shape, (2, len(classes)))
 
     def test_get_training_data(self):
-        train_x, train_y = self.data.get_training_data_from_intents(self.data, self.intents)
+        train_x, train_y = self.data.get_training_data_from_intents()
         self.assertEqual(train_x.shape, (len(documents), len(lexicon)))
         self.assertEqual(train_y.shape, (len(documents), len(classes)))
 

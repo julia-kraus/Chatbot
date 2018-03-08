@@ -18,11 +18,11 @@ class Dataset:
 
     def __init__(self, intents):
         self.intents = intents
-        self.x_train, self.y_train = self.get_training_data_from_intents(self.intents)
+        self.x_train, self.y_train = self.get_training_data_from_intents()
 
     def get_training_data_from_intents(self):
-        features = self.get_features(self.intents)
-        labels = self.get_labels(self.intents)
+        features = self.get_features()
+        labels = self.get_labels()
         return self.shuffle(features, labels)
 
     def get_features(self):
@@ -51,10 +51,12 @@ class Dataset:
         train_y = np.array(train_y)
         return x_train, train_y
 
-    def save_data(self, intents):
+    def save_data(self):
         pickle.dump(
-            {'lexicon': intents.lexicon, 'classes': intents.classes, 'x_train': self.x_train, 'y_train': self.y_train},
+            {'lexicon': self.intents.lexicon, 'classes': self.intents.classes, 'x_train': self.x_train,
+             'y_train': self.y_train},
             open("training_data", "wb"))
 
-    def load_data(self):
+    @staticmethod
+    def load_data():
         data = pickle.load(open("training_data", "rb"))
