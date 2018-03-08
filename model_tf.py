@@ -1,7 +1,11 @@
+import tensorflow as tf
+import tflearn
+
+
 def run_model(train_x, train_y):
     hid1 = 8
     hid2 = 8
-  
+
     # reset underlying graph data
     tf.reset_default_graph()
     # Build neural network
