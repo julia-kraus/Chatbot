@@ -47,6 +47,18 @@ class IntentsTester(unittest.TestCase):
         self.assertEqual(train_x.shape, (len(documents), len(lexicon)))
         self.assertEqual(train_y.shape, (len(documents), len(classes)))
 
+    def test_save_training_data(self):
+        self.data.save_data()
+        import os.path
+        self.assertTrue(os.path.isfile("training_data"))
+
+    def test_load_training_data(self):
+        lex, clss, x_train, y_train = self.data.load_data()
+        self.assertEqual(lex, lexicon)
+        self.assertEqual(clss, classes)
+        self.assertEqual(len(x_train), len(documents))
+        self.assertEqual(len(y_train), len(documents))
+
 
 lexicon = ["'m", "'s", 'a', 'anyon', 'ar', 'buy', 'bye', 'can', 'cheap', 'cheapest', 'coupon', 'day', 'deal', 'find',
            'for', 'good', 'goodby', 'hello', 'help', 'hi', 'how', 'i', 'is', 'lat', 'less', 'look', 'me', 'med',

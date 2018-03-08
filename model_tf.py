@@ -20,3 +20,6 @@ def run_model(train_x, train_y):
     # Start training (apply gradient descent algorithm)
     model.fit(train_x, train_y, n_epoch=1000, batch_size=8, show_metric=True)
     model.save('model.tflearn')
+
+# def load_model():
+#     model.load('./model.tflearn')

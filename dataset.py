@@ -46,17 +46,24 @@ class Dataset:
     def shuffle(features, labels):
         training_data = list(zip(features, labels))
         random.shuffle(training_data)
-        x_train, train_y = zip(*training_data)
+        x_train, y_train = zip(*training_data)
         x_train = np.array(x_train)
-        train_y = np.array(train_y)
-        return x_train, train_y
+        y_train = np.array(y_train)
+        return x_train, y_train
 
     def save_data(self):
-        pickle.dump(
-            {'lexicon': self.intents.lexicon, 'classes': self.intents.classes, 'x_train': self.x_train,
-             'y_train': self.y_train},
-            open("training_data", "wb"))
+        with open("training_data", "wb") as file:
+            pickle.dump(
+                {'lexicon': self.intents.lexicon, 'classes': self.intents.classes, 'x_train': self.x_train,
+                 'y_train': self.y_train},
+                file)
 
     @staticmethod
     def load_data():
-        data = pickle.load(open("training_data", "rb"))
+        with open("training_data", "rb") as file:
+            data = pickle.load(file)
+        lexicon = data['lexicon']
+        classes = data['classes']
+        x_train = data['x_train']
+        y_train = data['y_train']
+        return lexicon, classes, x_train, y_train
