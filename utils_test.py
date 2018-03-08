@@ -1,6 +1,6 @@
 import unittest
 
-import dataset
+import trainingdataset
 import user_intents
 
 
@@ -9,7 +9,7 @@ class IntentsTester(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.intents = user_intents.Intents()
-        cls.data = dataset.Dataset(cls.intents)
+        cls.data = trainingdataset.TrainingDataset(cls.intents)
         cls.maxDiff = None
 
     def test_create_intent(self):
@@ -25,7 +25,7 @@ class IntentsTester(unittest.TestCase):
         self.assertEqual(self.intents.documents, documents)
 
     def test_bag_of_words(self):
-        bag = dataset.build_bag_of_words(['is', 'anyon', 'ther', '?'], lexicon)
+        bag = trainingdataset.build_bag_of_words(['is', 'anyon', 'ther', '?'], lexicon)
         self.assertEqual(bag, feature1)
 
     def test_get_features(self):

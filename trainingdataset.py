@@ -12,7 +12,7 @@ def build_bag_of_words(words, lexicon):
     return bag
 
 
-class Dataset:
+class TrainingDataset:
     # Class for creation of training- and test datasets from intents or user input
     # New class for test data, because it only needs get_features
 

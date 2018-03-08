@@ -64,6 +64,17 @@ class Intents:
         return
 
 
+class UserInput:
+    def __init__(self, sentence):
+        self.sentence = sentence
+
+    def get_words(self):
+        words = nltk.word_tokenize(self.sentence)
+        words = stem(words)
+        return words
+
+
+
 def stem(words):
     stemmer = LancasterStemmer()
     ignore_words = ['?']
