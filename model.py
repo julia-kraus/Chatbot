@@ -6,7 +6,6 @@ import tflearn
 
 def build_graph(train_x, train_y):
     tf.reset_default_graph()
-
     net = tflearn.input_data(shape=[None, len(train_x[0])])
     net = tflearn.fully_connected(net, 8)
     net = tflearn.fully_connected(net, 8)

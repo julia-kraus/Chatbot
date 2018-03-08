@@ -3,13 +3,7 @@ import random
 
 import numpy as np
 
-
-def build_bag_of_words(words, lexicon):
-    """input: lexicon and list of words. Return: bag of words"""
-    bag = []
-    for w in lexicon:
-        bag.append(1) if w in words else bag.append(0)
-    return bag
+import word_utils
 
 
 class TrainingDataset:
@@ -28,7 +22,7 @@ class TrainingDataset:
     def get_features(self):
         features = []
         for doc in self.intents.documents:
-            bag = build_bag_of_words(doc[0], self.intents.lexicon)
+            bag = word_utils.build_bag_of_words(doc[0], self.intents.lexicon)
             features.append(bag)
         return np.array(features)
 

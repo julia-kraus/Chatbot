@@ -1,7 +1,6 @@
 import json
 
-import nltk
-from nltk.stem.lancaster import LancasterStemmer
+import word_utils
 
 
 class Intents:
@@ -35,8 +34,8 @@ class Intents:
             for pattern in intent['patterns']:
                 self.organize_patterns(pattern, intent)
 
-        self.classes = remove_duplicates(self.classes)
-        self.lexicon = remove_duplicates(self.lexicon)
+        self.classes = word_utils.remove_duplicates(self.classes)
+        self.lexicon = word_utils.remove_duplicates(self.lexicon)
         return
 
     def organize_patterns(self, pattern, intent):
@@ -47,7 +46,7 @@ class Intents:
 
     def get_lexicon(self, pattern):
         """tokenizes a pattern and adds the resulting words to the lexicon"""
-        w = tokenize_sentence(pattern)
+        w = word_utils.tokenize_sentence(pattern)
         self.lexicon.extend(w)
         return
 
@@ -59,34 +58,9 @@ class Intents:
 
     def get_document(self, pattern, intent):
         """get the documents from the intents"""
-        w = tokenize_sentence(pattern)
+        w = word_utils.tokenize_sentence(pattern)
         self.documents.append((w, intent['tag']))
         return
 
 
-class UserInput:
-    def __init__(self, sentence):
-        self.sentence = sentence
 
-    def get_words(self):
-        words = nltk.word_tokenize(self.sentence)
-        words = stem(words)
-        return words
-
-
-
-def stem(words):
-    stemmer = LancasterStemmer()
-    ignore_words = ['?']
-    words = [stemmer.stem(w.lower()) for w in words if w not in ignore_words]
-    return words
-
-
-def remove_duplicates(ls):
-    return sorted(list(set(ls)))
-
-
-def tokenize_sentence(sentence):
-    words = nltk.word_tokenize(sentence)
-    words = stem(words)
-    return words
