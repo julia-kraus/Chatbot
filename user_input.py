@@ -1,3 +1,5 @@
+import numpy as np
+
 import word_utils
 
 
@@ -10,7 +12,7 @@ class UserInput:
     def __init__(self, sentence, lexicon):
         self.sentence = sentence
         self.words = self.get_words()
-        self.bag = word_utils.build_bag_of_words(self.words, lexicon)
+        self.bag = np.array(word_utils.build_bag_of_words(self.words, lexicon))
 
     def get_words(self):
         words = word_utils.tokenize_sentence(self.sentence)
