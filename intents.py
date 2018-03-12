@@ -19,7 +19,7 @@ class Intents:
     # dictionary of responses
     responses = {}
 
-    def __init__(self, filename='intents1.json'):
+    def __init__(self, filename='intents_med.json'):
         self.intents = self.load_intents(filename)
         self.organize_intents()
 

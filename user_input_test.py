@@ -32,7 +32,7 @@ class ModelTester(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.intents = intents.Intents('intents1.json')
+        cls.intents = intents.Intents('intents_med.json')
         cls.dataset = trainingdataset.TrainingDataset(cls.intents)
         cls.x_train = cls.dataset.x_train
         cls.y_train = cls.dataset.y_train
