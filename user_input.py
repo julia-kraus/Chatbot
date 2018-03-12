@@ -2,7 +2,10 @@ import word_utils
 
 
 class UserInput:
-    """Class for the user input that is to be classified by the model"""
+    """Class for the user input that is to be classified by the model
+    Import and classify input, give response"""
+    ERROR_TRESHOLD = 0.25
+    context = {}
 
     def __init__(self, sentence, lexicon):
         self.sentence = sentence

@@ -25,6 +25,9 @@ class IntentsTester(unittest.TestCase):
     def test_documents(self):
         self.assertEqual(self.intents.documents, documents)
 
+    def test_responses(self):
+        self.assertEqual(self.intents.responses['greeting'], responses['greeting'])
+
     def test_bag_of_words(self):
         bag = word_utils.build_bag_of_words(['is', 'anyon', 'ther', '?'], lexicon)
         self.assertEqual(bag, feature1)
@@ -84,6 +87,12 @@ documents = [(['hi'], 'greeting'),
              (['wher', 'can', 'i', 'buy', 'med', 'for', 'less', 'money'], 'med'),
              (['what', 'is', 'the', 'coupon'], 'coupon'),
              (['send', 'me', 'the', 'coupon'], 'coupon')]
+
+responses = {'greeting': ["Hello, thanks for visiting", "Good to see you again", "Hi there"],
+             'goodbye': ["See you later", "Have a nice day", "Bye! Come back again soon."],
+             'thanks': ["Happy to help!", "Any time!", "My pleasure"],
+             'handleRx': [],
+             'coupon': ["Sorry, no coupon", "No coupon available"]}
 
 feature1 = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 1, 0, 0, 0, 0, 0]

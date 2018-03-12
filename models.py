@@ -2,7 +2,7 @@ import tensorflow as tf
 import tflearn
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
+import torch.nn.functional
 from torch.autograd import Variable
 
 
@@ -32,10 +32,10 @@ class TorchModel(nn.Module):
         self.fully_connected2 = nn.Linear(8, 8)
 
     def forward(self, x):
-        x = F.relu(self.fully_connected1(x))
+        x = torch.nn.functional.relu(self.fully_connected1(x))
         x = self.fully_connected2(x)
         # check again if dim=1 or dim=0 is right
-        return F.log_softmax(x, dim=1)
+        return torch.nn.functional.log_softmax(x, dim=1)
 
     def fit(self, x_train, y_train):
         # learning rate defaults to 1e-2
