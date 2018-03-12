@@ -2,6 +2,9 @@ import nltk
 from nltk.stem import LancasterStemmer
 
 
+# from nltk.stem.snowball import GermanStemmer
+
+
 def stem(words):
     stemmer = LancasterStemmer()
     ignore_words = ['?']
