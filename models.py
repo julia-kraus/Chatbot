@@ -22,7 +22,6 @@ class TfModel:
     def fit(self, train_x, train_y):
         self.model.fit(train_x, train_y, n_epoch=1000, batch_size=8, show_metric=True)
         self.model.save('model.tflearn')
-        print("TensorFlow model is now trained.")
 
 
 class TorchModel(nn.Module):
@@ -60,5 +59,4 @@ class TorchModel(nn.Module):
             if epoch % 50 == 0:
                 print('Epoch [%d/%d] Loss: %.5f'
                       % (epoch + 1, num_epochs, loss.data[0]))
-        print("Pytorch model is now trained.")
         torch.save(self.state_dict(), 'model.pytorch')

@@ -18,7 +18,7 @@ class Chatbot:
     def classify(self, sentence):
         # convert sentence into userInput
         inp = user_input.UserInput(sentence, lexicon=self.intents.lexicon)
-        results = self.model.model.predict(inp.bag.reshape(1, 40))[0]
+        results = self.model.model.predict(inp.bag.reshape(1, len(self.intents.lexicon)))[0]
         # filter out predictions below a threshold
         results = [[i, r] for i, r in enumerate(results) if r > self.ERROR_THRESHOLD]
         # sort by strength of probability
@@ -27,11 +27,17 @@ class Chatbot:
         for r in results:
             return_list.append((self.intents.classes[r[0]], r[1]))
         # return tuple of intent and probability
-        print(return_list)
         return return_list
 
-    def response(self, sentence):
+    def response(self, sentence, show_details):
         results = self.classify(sentence)
         # if we have a classification then find the matching intent tag
-        for r in results:
-            return print(random.choice(self.intents.responses(r)))
+        pred_classes = results[0]
+        for r in pred_classes:
+            answer = random.choice(self.intents.responses[r])
+
+            if self.intents.context_set['r']:
+                if show_details:
+                    print('context: ', )
+
+            return answer

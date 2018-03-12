@@ -18,6 +18,8 @@ class Intents:
     documents = []
     # dictionary of responses
     responses = {}
+    context_set = {}
+    context_filter = {}
 
     def __init__(self, filename='intents_med.json'):
         self.intents = self.load_intents(filename)
@@ -34,6 +36,8 @@ class Intents:
         for intent in self.intents:
             self.get_class(intent)
             self.get_responses(intent)
+            self.get_context_filter()
+            self.get_context_set()
             for pattern in intent['patterns']:
                 self.organize_patterns(pattern, intent)
 
@@ -46,6 +50,14 @@ class Intents:
         self.get_lexicon(pattern)
         self.get_document(pattern, intent)
         return
+
+    def get_context_set(self, intent):
+        if intent['context_set']:
+            self.context_set[intent['tag']] = intent['context_set']
+
+    def get_context_filter(self, intent):
+        if intent['context_filter']:
+            self.context_filter[intent['tag']] = intent['context_filter']
 
     def get_lexicon(self, pattern):
         """tokenizes a pattern and adds the resulting words to the lexicon"""

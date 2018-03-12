@@ -10,7 +10,13 @@ class ChatbotTester(unittest.TestCase):
 
     def test_classify(self):
         result = self.bot.classify('Hello!')
-        self.assertIsNotNone(result)
+        self.assertTrue("greeting" in result[0])
+
+    def test_response(self):
+        self.answer = self.bot.response('Hello!')
+        self.assertTrue(self.answer in ["Hello, thanks for visiting", "Good to see you again", "Hi there"])
+
+
 
 
 if __name__ == '__main__':
