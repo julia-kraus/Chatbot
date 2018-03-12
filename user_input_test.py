@@ -37,11 +37,18 @@ class ModelTester(unittest.TestCase):
         cls.x_train = cls.dataset.x_train
         cls.y_train = cls.dataset.y_train
 
-    def test_train_model(self):
-        model = models.TfModel(self.x_train, self.y_train)
+    # def test_train_model(self):
+    #     model = models.TfModel(self.x_train, self.y_train)
+    #     model.fit(self.x_train, self.y_train)
+    #     import os.path
+    #     self.assertTrue(os.path.isfile("model.tflearn.meta"))
+
+    def test_train_torch_model(self):
+        model = models.TorchModel(self.x_train, self.y_train)
         model.fit(self.x_train, self.y_train)
         import os.path
-        self.assertTrue(os.path.isfile("model.tflearn.meta"))
+        self.assertTrue(os.path.isfile("model.pytorch"))
+
 
 
 if __name__ == '__main__':
