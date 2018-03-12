@@ -34,12 +34,13 @@ class TorchModel(nn.Module):
     def forward(self, x):
         x = F.relu(self.fully_connected1(x))
         x = self.fully_connected2(x)
-        return F.log_softmax(x)
+        # check again if dim=1 or dim=0 is right
+        return F.log_softmax(x, dim=1)
 
     def fit(self, x_train, y_train):
         # learning rate defaults to 1e-2
         # choose optimizer and loss function
-        optimizer = torch.optim.SGD(self.parameters(), lr=0.01)
+        optimizer = torch.optim.Adam(self.parameters(), lr=0.01)
         criterion = nn.CrossEntropyLoss()
 
         num_epochs = 1000

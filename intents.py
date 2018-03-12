@@ -16,6 +16,8 @@ class Intents:
     lexicon = []
     classes = []
     documents = []
+    # dictionary of responses
+    responses = {}
 
     def __init__(self, filename='intents1.json'):
         self.intents = self.load_intents(filename)
@@ -31,6 +33,7 @@ class Intents:
         """extract words, documents and classes from the intents"""
         for intent in self.intents:
             self.get_class(intent)
+            self.get_responses(intent)
             for pattern in intent['patterns']:
                 self.organize_patterns(pattern, intent)
 
@@ -62,5 +65,6 @@ class Intents:
         self.documents.append((w, intent['tag']))
         return
 
-
-
+    def get_responses(self, intent):
+        tag = intent['tag']
+        self.responses[tag] = intent['responses']

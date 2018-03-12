@@ -1,9 +1,9 @@
 import unittest
 
+import intents
 import models
 import trainingdataset
 import user_input
-import user_intents
 
 
 class UserInputTester(unittest.TestCase):
@@ -32,16 +32,16 @@ class ModelTester(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.intents = user_intents.Intents('intents1.json')
+        cls.intents = intents.Intents('intents1.json')
         cls.dataset = trainingdataset.TrainingDataset(cls.intents)
         cls.x_train = cls.dataset.x_train
         cls.y_train = cls.dataset.y_train
 
-    # def test_train_model(self):
-    #     model = models.TfModel(self.x_train, self.y_train)
-    #     model.fit(self.x_train, self.y_train)
-    #     import os.path
-    #     self.assertTrue(os.path.isfile("model.tflearn.meta"))
+    def test_train_model(self):
+        model = models.TfModel(self.x_train, self.y_train)
+        model.fit(self.x_train, self.y_train)
+        import os.path
+        self.assertTrue(os.path.isfile("model.tflearn.meta"))
 
     def test_train_torch_model(self):
         model = models.TorchModel(self.x_train, self.y_train)

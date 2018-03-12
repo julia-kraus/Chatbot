@@ -1,7 +1,7 @@
 import unittest
 
+import intents
 import trainingdataset
-import user_intents
 import word_utils
 
 
@@ -9,7 +9,7 @@ class IntentsTester(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.intents = user_intents.Intents()
+        cls.intents = intents.Intents()
         cls.data = trainingdataset.TrainingDataset(cls.intents)
         cls.maxDiff = None
 
