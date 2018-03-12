@@ -39,7 +39,7 @@ class ModelTester(unittest.TestCase):
 
     def test_train_model(self):
         model = models.TfModel(self.x_train, self.y_train)
-        model.train(self.x_train, self.y_train)
+        model.fit(self.x_train, self.y_train)
         import os.path
         self.assertTrue(os.path.isfile("model.tflearn.meta"))
 
