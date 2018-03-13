@@ -23,7 +23,6 @@ class Intents:
         intents = self.load_intents(filename)
         self.create_intents_dict(intents)
         self.organize_intents()
-        print(self.documents)
 
     def create_intents_dict(self, raw_intents):
         # for intent in raw_intents:

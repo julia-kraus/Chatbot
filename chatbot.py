@@ -15,7 +15,7 @@ def is_contextual(intent):
 
 
 def choose_response_for_intent(intent):
-    return print(random.choice(intent['responses']))
+    return random.choice(intent['responses'])
 
 
 class Chatbot:
@@ -39,24 +39,23 @@ class Chatbot:
         # return tuple of prediction and probability
         return self.intents.classes[prediction[0]], prediction[1]
 
-    def respond(self, sentence, userID=None, show_details=True):
+    def respond(self, sentence, userID=None):
         results = self.classify(sentence)
         pred_class = results[0]
         pred_intent = self.intents_dict[pred_class]
-        self.set_context_for_further_conversation(pred_intent, userID, show_details)
-        self.apply_context(userID, pred_intent, show_details)
+        self.set_context_for_further_conversation(pred_intent, userID)
+        answer = self.apply_context(pred_intent, userID)
+        return answer
 
-    def set_context_for_further_conversation(self, intent, userID, show_details):
+    def set_context_for_further_conversation(self, intent, userID):
         if is_context_setter(intent):
-            if show_details:
-                print('context: ', intent['context_set'])
             self.context[userID] = intent['context_set']
 
-    def apply_context(self, intent, userID, show_details):
+    def apply_context(self, intent, userID):
         if not is_contextual(intent):
-            return print(choose_response_for_intent(intent))
+            return choose_response_for_intent(intent)
         elif self.context_already_set(userID) and intent['context_filter'] == self.context[userID]:
-            return print(choose_response_for_intent(intent))
+            return choose_response_for_intent(intent)
 
     def context_already_set(self, userID):
         return userID in self.context
