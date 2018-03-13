@@ -22,7 +22,7 @@ class TrainingDataset:
     def get_features(self):
         features = []
         for doc in self.intents.documents:
-            bag = word_utils.build_bag_of_words(doc[0], self.intents.lexicon)
+            bag = word_utils.build_bag_of_words(doc['words'], self.intents.lexicon)
             features.append(bag)
         return np.array(features)
 
@@ -32,7 +32,7 @@ class TrainingDataset:
         for doc in self.intents.documents:
             label = np.zeros(len(self.intents.classes))
             # for words that match in lexicon and document: set labels index to 1, else zero
-            label[self.intents.classes.index(doc[1])] = 1
+            label[self.intents.classes.index(doc['class'])] = 1
             labels.append(label)
         return np.array(labels)
 

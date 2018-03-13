@@ -12,17 +12,24 @@ class Intents:
     documents: examples of user intents we have
     classes: possible types of intent (e.g. greeting, request, etc.)
     """
+
     lexicon = []
     classes = []
     documents = []
-    # dictionary of responses
-    responses = {}
-    context_set = {}
-    context_filter = {}
+    intents = {}
 
     def __init__(self, filename='intents_contextual_chatbot.json'):
-        self.intents = self.load_intents(filename)
+        self.filename = filename
+        raw_intents = self.load_intents(filename)
+        self.create_intents(raw_intents)
         self.organize_intents()
+        print(self.documents)
+
+    def create_intents(self, raw_intents):
+        # for intent in raw_intents:
+        #     self.intents[intent['tag']] = intent
+        classes = [value['tag'] for value in raw_intents]
+        self.intents = {key: value for (key, value) in zip(classes, raw_intents)}
 
     @classmethod
     def load_intents(cls, filename):
@@ -32,15 +39,10 @@ class Intents:
 
     def organize_intents(self):
         """extract words, documents and classes from the intents"""
-        for intent in self.intents:
-            self.get_class(intent)
-            self.get_responses(intent)
-            # self.get_context_filter(intent)
-            # self.get_context_set(intent)
+        self.classes = word_utils.remove_duplicates(self.intents.keys())
+        for intent in self.intents.values():
             for pattern in intent['patterns']:
                 self.organize_patterns(pattern, intent)
-
-        self.classes = word_utils.remove_duplicates(self.classes)
         self.lexicon = word_utils.remove_duplicates(self.lexicon)
         return
 
@@ -50,32 +52,15 @@ class Intents:
         self.get_document(pattern, intent)
         return
 
-    # def get_context_set(self, intent):
-    #     if intent['context_set'] is not None:
-    #         self.context_set[intent['tag']] = intent['context_set']
-
-    # def get_context_filter(self, intent):
-    #     if intent['context_filter'] is not None:
-    #         self.context_filter[intent['tag']] = intent['context_filter']
-
     def get_lexicon(self, pattern):
         """tokenizes a pattern and adds the resulting words to the lexicon"""
         w = word_utils.tokenize_sentence(pattern)
         self.lexicon.extend(w)
         return
 
-    def get_class(self, intent):
-        """get the unique classes of the intents"""
-        if intent['tag'] not in self.classes:
-            self.classes.append(intent['tag'])
-        return
-
     def get_document(self, pattern, intent):
         """get the documents from the intents"""
         w = word_utils.tokenize_sentence(pattern)
-        self.documents.append((w, intent['tag']))
+        self.documents.append({'words': w, 'class': intent['tag']})
         return
 
-    def get_responses(self, intent):
-        tag = intent['tag']
-        self.responses[tag] = intent['responses']

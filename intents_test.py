@@ -9,27 +9,28 @@ class IntentsTester(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.intents = intents.Intents()
-        cls.data = trainingdataset.TrainingDataset(cls.intents)
+        cls.int = intents.Intents('intents_med.json')
+        cls.data = trainingdataset.TrainingDataset(cls.int)
         cls.maxDiff = None
 
     def test_create_intent(self):
-        self.assertIsNotNone(self.intents)
+        self.assertIsNotNone(self.int.intents)
+        self.assertTrue('Hello, thanks for visiting' in self.int.intents['greeting']['responses'])
 
     def test_lexicon(self):
-        self.assertEqual(self.intents.lexicon, lexicon)
+        self.assertEqual(self.int.lexicon, lexicon)
 
     def test_classes(self):
-        self.assertEqual(self.intents.classes, classes)
+        self.assertEqual(self.int.classes, classes)
 
-    def test_documents(self):
-        self.assertEqual(self.intents.documents, documents)
+    # def test_documents(self):
+    #     self.assertEqual(self.int.documents, documents)
 
     def test_responses(self):
-        self.assertEqual(self.intents.responses['greeting'], responses['greeting'])
+        self.assertTrue(responses['greeting'][0] in self.int.intents['greeting']['responses'])
 
-    # def test_get_context(self):
-    #     self.assertEqual(self.intents.context_set['rental'], 'rentalday')
+    def test_get_context(self):
+        self.assertEqual(self.int.intents['med']['context_set'], 'getRx')
 
     def test_bag_of_words(self):
         bag = word_utils.build_bag_of_words(['is', 'anyon', 'ther', '?'], lexicon)
@@ -73,7 +74,7 @@ lexicon = ["'m", "'s", 'a', 'anyon', 'ar', 'buy', 'bye', 'can', 'cheap', 'cheape
 
 classes = ['coupon', 'goodbye', 'greeting', 'handleRx', 'med', 'thanks']
 
-documents = [(['hi'], 'greeting'),
+documents = [{'words': ['hi'], 'class': 'greeting'},
              (['how', 'ar', 'you'], 'greeting'),
              (['is', 'anyon', 'ther'], 'greeting'),
              (['hello'], 'greeting'),
@@ -106,6 +107,15 @@ feature5 = [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 label1 = [0, 0, 1, 0, 0, 0]
 
 label5 = [0, 1, 0, 0, 0, 0]
+
+
+class IntentsTester2():
+    @classmethod
+    def setUpClass(cls):
+        cls.int = intents.Intents('intents_contextual_chatbot.json')
+        cls.data = trainingdataset.TrainingDataset(cls.int)
+        cls.maxDiff = None
+
 
 if __name__ == '__main__':
     unittest.main()
