@@ -1,5 +1,3 @@
-import random
-
 import intents
 import models
 import trainingdataset
@@ -8,6 +6,8 @@ import user_input
 
 class Chatbot:
     ERROR_THRESHOLD = 0.25
+    # contains state for each user
+    context = {}
 
     def __init__(self, intentsfile):
         self.intents = intents.Intents(intentsfile)
@@ -29,15 +29,21 @@ class Chatbot:
         # return tuple of intent and probability
         return return_list
 
-    def response(self, sentence, show_details):
-        results = self.classify(sentence)
-        # if we have a classification then find the matching intent tag
-        pred_classes = results[0]
-        for r in pred_classes:
-            answer = random.choice(self.intents.responses[r])
-
-            if self.intents.context_set['r']:
-                if show_details:
-                    print('context: ', )
-
-            return answer
+    # def response(self, sentence, userID, show_details):
+    #     results = self.classify(sentence)
+    #     # if we have a classification then find the matching intent tag
+    #     pred_classes = results[0]
+    #     for c in pred_classes:
+    #         answer = random.choice(self.intents.responses[c])
+    #         # set context for this intent if necessary
+    #         if c in self.intents.context_set.keys():
+    #             if show_details:
+    #                 print('context: ', self.intents.context_set[c])
+    #                 self.context[userID] = self.intents.context_set[c]
+    #
+    #         # check if intent is contextual and apply to this user's conversation
+    #         if c not in self.intents.context_filter.keys() or (userID in self.context and ):
+    #             if show_details: print('tag', )
+    #
+    #
+    #         return answer

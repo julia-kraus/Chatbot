@@ -14,17 +14,17 @@
         {"tag": "med",
          "patterns": ["I'm looking for cheap meds", "want to find a deal", "where are the cheapest meds", "where can I buy meds for less money" ],
          "responses": ["What's the name of the medication?"],
-         "context": "getRx"
+          "context_set": "getRx"
         },
         {"tag": "handleRx",
          "patterns": [],
          "responses": [],
-         "context": "handleRx"
+          "context_set": "handleRx"
         },
         {"tag": "coupon",
          "patterns": ["what is the coupon", "send me the coupon"],
          "responses": ["Sorry, no coupon", "No coupon available"],
-         "context": "coupon"
+          "context_set": "coupon"
         }
    ]
 }

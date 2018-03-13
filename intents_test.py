@@ -28,6 +28,9 @@ class IntentsTester(unittest.TestCase):
     def test_responses(self):
         self.assertEqual(self.intents.responses['greeting'], responses['greeting'])
 
+    # def test_get_context(self):
+    #     self.assertEqual(self.intents.context_set['rental'], 'rentalday')
+
     def test_bag_of_words(self):
         bag = word_utils.build_bag_of_words(['is', 'anyon', 'ther', '?'], lexicon)
         self.assertEqual(bag, feature1)
