@@ -13,7 +13,7 @@ class ChatbotTester(unittest.TestCase):
         self.assertTrue("greeting" in result[0])
 
     def test_response(self):
-        self.answer = self.bot.response('Hello!')
+        self.answer = self.bot.respond('Hello!')
         self.assertTrue(self.answer in ["Hello, thanks for visiting", "Good to see you again", "Hi there"])
 
 

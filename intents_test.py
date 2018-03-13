@@ -14,8 +14,8 @@ class IntentsTester(unittest.TestCase):
         cls.maxDiff = None
 
     def test_create_intent(self):
-        self.assertIsNotNone(self.int.intents)
-        self.assertTrue('Hello, thanks for visiting' in self.int.intents['greeting']['responses'])
+        self.assertIsNotNone(self.int.intents_dict)
+        self.assertTrue('Hello, thanks for visiting' in self.int.intents_dict['greeting']['responses'])
 
     def test_lexicon(self):
         self.assertEqual(self.int.lexicon, lexicon)
@@ -27,10 +27,10 @@ class IntentsTester(unittest.TestCase):
     #     self.assertEqual(self.int.documents, documents)
 
     def test_responses(self):
-        self.assertTrue(responses['greeting'][0] in self.int.intents['greeting']['responses'])
+        self.assertTrue(responses['greeting'][0] in self.int.intents_dict['greeting']['responses'])
 
     def test_get_context(self):
-        self.assertEqual(self.int.intents['med']['context_set'], 'getRx')
+        self.assertEqual(self.int.intents_dict['med']['context_set'], 'getRx')
 
     def test_bag_of_words(self):
         bag = word_utils.build_bag_of_words(['is', 'anyon', 'ther', '?'], lexicon)

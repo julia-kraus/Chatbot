@@ -16,20 +16,20 @@ class Intents:
     lexicon = []
     classes = []
     documents = []
-    intents = {}
+    intents_dict = {}
 
     def __init__(self, filename='intents_contextual_chatbot.json'):
         self.filename = filename
-        raw_intents = self.load_intents(filename)
-        self.create_intents(raw_intents)
+        intents = self.load_intents(filename)
+        self.create_intents_dict(intents)
         self.organize_intents()
         print(self.documents)
 
-    def create_intents(self, raw_intents):
+    def create_intents_dict(self, raw_intents):
         # for intent in raw_intents:
         #     self.intents[intent['tag']] = intent
         classes = [value['tag'] for value in raw_intents]
-        self.intents = {key: value for (key, value) in zip(classes, raw_intents)}
+        self.intents_dict = {key: value for (key, value) in zip(classes, raw_intents)}
 
     @classmethod
     def load_intents(cls, filename):
@@ -39,8 +39,8 @@ class Intents:
 
     def organize_intents(self):
         """extract words, documents and classes from the intents"""
-        self.classes = word_utils.remove_duplicates(self.intents.keys())
-        for intent in self.intents.values():
+        self.classes = word_utils.remove_duplicates(self.intents_dict.keys())
+        for intent in self.intents_dict.values():
             for pattern in intent['patterns']:
                 self.organize_patterns(pattern, intent)
         self.lexicon = word_utils.remove_duplicates(self.lexicon)
