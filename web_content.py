@@ -1,9 +1,6 @@
 from urllib.request import urlopen
 
-import httplib2
 from bs4 import BeautifulSoup
-
-http = httplib2.Http()
 
 
 # location entweder vom user erfragen oder über Handyortung
